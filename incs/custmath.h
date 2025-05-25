@@ -48,9 +48,11 @@ f32 Pow(f32 x, i32 y) {
 			else return (tmp*tmp) / x;
 }
 
-// http://rrrola.wz.cz/inv_sqrt.html
+//-------http://rrrola.wz.cz/inv_sqrt.html-----------------------
 f32 Sqrt(f32 x)
-{ union { f32 f; u32 u; } y = {x};
-  y.u = 0x5F1FFFF9ul - (y.u >> 1);
-  return 0.703952253f * y.f * (2.38924456f - x * y.f * y.f)/x;
+{
+	union { f32 f; u32 u; } y = {x};
+	y.u = 0x5F1FFFF9ul - (y.u >> 1);
+	return 0.703952253f * y.f * (2.38924456f - x * y.f * y.f)/x;
 }
+//---------------------------------------------------------------
