@@ -2,7 +2,7 @@
 #include <math.h>
 #include "incs/stdtypes.h"
 
-#define FXPBITS 32
+#define FXPBITS 16
 #define FXPUNIT ((fixed_t)1<<FXPBITS)
 
 typedef i128 fixed_t;
