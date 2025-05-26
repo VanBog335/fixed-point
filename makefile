@@ -7,4 +7,4 @@ all:
 	./a.exe
 
 git:
-	git add . ; git commit -m "." ; git push
+	git commit -am "." ; git push
