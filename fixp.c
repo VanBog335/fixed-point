@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <math.h>
-#include "incs/stdtypes.h"
+#include <inttypes.h>
 
-#define FXPBITS 16
-#define FXPUNIT ((fixed_t)1<<FXPBITS)
+#include "fixp.h"
 
-typedef i128 fixed_t;
+// using those in fixp.h file can conflict with other libraries/applications
+typedef int16_t i16;
+typedef uint16_t u16;
+typedef int32_t i32;
+typedef uint32_t u32;
+typedef int64_t i64;
+typedef uint64_t u64;
+
+typedef float f32;
+typedef double f64;
 
 f64 fixed2float(fixed_t input)
 {
@@ -48,68 +56,3 @@ fixed_t fixed_sqrt(fixed_t n)
 
 	return ans<<(FXPBITS>>1);
 }
-
-
-#define NUM_DECIMAL_PLACES 100
-
-void calcDiv(i64 A, i64 B) {
-	if (B == 0) {
-		printf("Infinity\n");
-		return;
-	}
-
-	long long result = A / B;
-	long long remainder = A % B;
-	long long decimal = remainder / B;
-
-	printf("%lld.", result);
-
-	for (int i = 0; i < NUM_DECIMAL_PLACES; i++) {
-		remainder *= 10;
-		decimal = remainder / B;
-		remainder = remainder % B;
-
-		printf("%lld", decimal);
-	}
-
-	printf("\n");
-}
-
-
-i32 main()
-{
-	//f64 a = 324.67;
-	f64 a = 13342.54;
-	f64 b = -9.67;
-	
-	fixed_t Fa = float2fixed(a);
-	fixed_t Fb = float2fixed(b);
-	
-	
-	printf("\n\nFXPBITS:%d\n", FXPBITS);
-	
-	printf("a=%f, fl2fi=%lld, fi2fl=%.10f\n", a, Fa, fixed2float(Fa));
-	printf("b=%f, fl2fi=%lld, fi2fl=%.10f\n", b, Fb, fixed2float(Fb));
-
-	puts("");
-	
-	// Multiplying
-	printf("a=%f, b=%f\n"
-		   "fl mul=%f\nfx mul=%.10f\n\n",
-		   a, b, a*b , fixed2float( fixed_mul(Fa, Fb) )
-	);
-
-	// Dividing
-	printf("a=%f, b=%f\n"
-			   "fl div=%f\nfx div=%.10f\n\n",
-			   a, b, a/b , fixed2float( fixed_div(Fa ,Fb) )
-	);
-	
-	// sum
-	printf("fl sum=%f\nfx sum=%.10f\n\n", a+b, fixed2float(Fa+Fb));
-	
-	//sqrt
-	printf("fl sqrt=%f\nfx sqrt=%.10f\n", sqrt(a), fixed2float(fixed_sqrt(Fa)));
-	
-}
-
