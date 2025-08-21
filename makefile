@@ -3,7 +3,7 @@ GCC=gcc
 
 all:
 	#$(TCC) -Wall -run fixp.c
-	$(CC) -O2 -s -Wall -o a.exe fixp.c
+	$(CC) -Wall -Wextra main.c
 	./a.exe
 
 git:
